@@ -1,0 +1,36 @@
+- to do
+~ on going
+o done
+
+------------------------
+
+DESIGN @ Figma
+  - Website wireframe
+  - Color choice
+  - Font choice
+  - Logo?
+
+WWW
+  ~ Backend setup
+  ~ HTML + CSS structure
+  - React?
+  - JS animation
+  - Metamask connection
+
+SMART CONTRACTS
+  - Faucet?
+    - Token creation
+    - LP 
+
+  - Game
+    - Slide system or 2 buttons
+    - Simple bet 1->500 or 500->1000 
+
+VIDEO
+  - Record app
+  - Record voice
+  - Editing
+
+------------------------
+
+11/03/23

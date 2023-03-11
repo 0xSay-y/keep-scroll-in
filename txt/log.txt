@@ -1,0 +1,10 @@
+10/03/23
+  - Git repo initiated + token connection
+  - To do list
+  - Domain name registration
+  - Figma file created
+
+11/03/23
+  - Backend setup
+  - HTML + CSS structure
+  - Figma file started

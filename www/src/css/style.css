@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "TTNorms";
+  src: url("/www/src/fonts/TTNorms-Medium.ttf");
+}
+:root {
+  --black: #000000;
+  --white: #ffffff;
+}
+
+html, body {
+  position: relative;
+  overflow-x: hidden;
+  background-color: var(--white);
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+}
+body p {
+  font-family: "TTNorms", Arial, sans-serif;
+  font-size: 24px;
+}
+
+/*# sourceMappingURL=style.css.map */
