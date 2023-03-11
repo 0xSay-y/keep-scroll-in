@@ -6,9 +6,9 @@ o done
 
 DESIGN @ Figma
   ~ Website wireframe
-  ~ Color choice
+  o Color choice
   o Font choice
-  - Logo?
+  o Logo + icon
 
 WWW
   ~ Backend setup
@@ -20,7 +20,7 @@ WWW
 SMART CONTRACTS
   - Faucet?
     - Token creation
-    - LP 
+    - LP?
 
   - Game
     - Slide system or 2 buttons

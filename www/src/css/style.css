@@ -1,6 +1,6 @@
 @font-face {
   font-family: "TTNorms";
-  src: url("src/fonts/TTNorms-Medium.ttf");
+  src: url("../fonts/TTNorms-Medium.ttf");
 }
 :root {
   --black: #000000;
@@ -24,8 +24,11 @@ body {
   cursor: default;
 }
 body p {
-  font-family: "TTNorms", Arial, sans-serif;
+  font-family: "TTNorms";
   font-size: 24px;
+}
+body p svg {
+  height: 24px;
 }
 
 /*# sourceMappingURL=style.css.map */
