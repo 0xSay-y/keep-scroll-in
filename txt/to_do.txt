@@ -5,9 +5,9 @@ o done
 ------------------------
 
 DESIGN @ Figma
-  - Website wireframe
-  - Color choice
-  - Font choice
+  ~ Website wireframe
+  ~ Color choice
+  o Font choice
   - Logo?
 
 WWW
