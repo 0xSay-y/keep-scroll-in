@@ -8,3 +8,14 @@
   - Backend setup
   - HTML + CSS structure
   - Figma file started
+
+12/03/23
+  - Figma design v1 done
+
+13/03/23
+  - Smart contracts research and start
+
+14/03/23
+  - Token contract: code + deployment
+  - Faucet contract: code + deployment
+  - Python random number script
