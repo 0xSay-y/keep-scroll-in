@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "TTNorms";
+  src: url("TTNorms-Medium.ttf");
+}
+
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --light: #F6F6F6;
+  --grey: #7E7E7E;
+  --sand: #D6C8B4;
+  --sand2: #E0D4C3;
+  --brown: #333333;
+  --orange: #FF8D1F;
+  --green: #4FBF90;
+  --red: #FF6262;
+  --pink: #E7C4B8;
+}
+
+html, body {
+  position: relative;
+  overflow-x: hidden;
+
+  background-color: var(--light);
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+
+  margin:0;
+  padding:0;
+
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+
+  font-family: "TTNorms";
+  cursor: default;
+}

@@ -1,6 +1,7 @@
 - to do
 ~ on going
 o done
+? reflexion
 
 ------------------------
 
@@ -13,18 +14,19 @@ DESIGN @ Figma
 WWW
   ~ Backend setup
   ~ HTML + CSS structure
-  - React app
+  ~ React app
+  o Metamask integration
+  - Faucet integration
+  - Game integration
   - JS animation
-  - Metamask connection
-  o Python script (random number generator)
+  ? Sound effect?
 
 SMART CONTRACTS
   o Token (0x41485c5Fd37B1a4d892f2f4b668398242AE4f981)
-      https://blockscout.scroll.io/address/0x41485c5Fd37B1a4d892f2f4b668398242AE4f981/contracts#address-tabs
+      https://blockscout.scroll.io/address/0x41485c5Fd37B1a4d892f2f4b668398242AE4f981
   o Faucet (0xa1f7Ee880e7fD47d692606FAcBe757AB62c2deF3)
       https://blockscout.scroll.io/address/0xa1f7Ee880e7fD47d692606FAcBe757AB62c2deF3
-      50000000
-  - Game
+  ~ Game
 
 VIDEO
   - Record app
@@ -33,4 +35,4 @@ VIDEO
 
 ------------------------
 
-14/03/23
+20/03/23

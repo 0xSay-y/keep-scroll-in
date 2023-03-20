@@ -19,3 +19,15 @@
   - Token contract: code + deployment
   - Faucet contract: code + deployment
   - Python random number script
+
+15/03/23
+  - Game contract: research + initial code
+
+16/03/23 - 18/03/23
+  - Game contract: research + initial code
+  - React app integration research
+
+20/03/23
+  - React app creation
+  - Metamask integration
+  - Faucet integration
