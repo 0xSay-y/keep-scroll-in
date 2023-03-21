@@ -16,9 +16,9 @@ WWW
   ~ HTML + CSS structure
   ~ React app
   o Metamask integration
-  - Faucet integration
+  o Faucet integration
   - Game integration
-  - JS animation
+  ~ JS animation
   ? Sound effect?
 
 SMART CONTRACTS
@@ -35,4 +35,4 @@ VIDEO
 
 ------------------------
 
-20/03/23
+21/03/23

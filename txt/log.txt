@@ -31,3 +31,7 @@
   - React app creation
   - Metamask integration
   - Faucet integration
+
+21/03/23
+  - React app: nav / scroll 
+  - Game contract: continuation

@@ -3,6 +3,12 @@
   src: url("TTNorms-Medium.ttf");
 }
 
+@keyframes fadein {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 :root {
   --black: #000000;
   --white: #ffffff;
@@ -10,6 +16,8 @@
   --grey: #7E7E7E;
   --sand: #D6C8B4;
   --sand2: #E0D4C3;
+  --sand3: #e4ded5;
+  --sand4: #f3f0ebc3;
   --brown: #333333;
   --orange: #FF8D1F;
   --green: #4FBF90;
@@ -34,7 +42,10 @@ body {
   display: flex;
   justify-content: center;
   /* align-items: center; */
+  /* position: absolute; */
 
   font-family: "TTNorms";
   cursor: default;
+
+  animation: fadein 1.5s;
 }

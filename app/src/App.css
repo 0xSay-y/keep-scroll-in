@@ -1,10 +1,13 @@
 header {
+  height: 10vh;
   width: 80vw;
 
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
+  justify-content: center;
+  /* align-items: center; */
+
+  z-index: 10;
 }
 
 #header-top, #nav, #wallet {
@@ -15,6 +18,7 @@ header {
 }
 #nav {
   width: 22vw;
+  z-index: 10;
 }
 #nav .btn {
   padding: 3px 12px;
@@ -23,12 +27,13 @@ header {
   color: var(--grey);
   border: 2px solid transparent;
 
-  transition: color 0.3s, border 0.3s;
+  transition: color 0.3s, border 0.3s, background 0.3s;
 }
 #nav .btn:hover {
   border: 2px solid var(--orange);
   cursor: pointer;
   color: var(--black);
+  background: var(--sand4);
 }
 #nav .selected {
   border: 2px solid var(--pink);
@@ -39,6 +44,9 @@ header {
   font-family: "TTNorms";
   font-size: 24px;
 }
+#logo span {
+  color: var(--grey);
+}
 
 .btn, #wallet p {
   font-size:16px;
@@ -48,10 +56,11 @@ header {
   padding: 3px 12px;
   border-radius: 50px;
   border: 2px solid var(--pink);
-  transition: color 0.3s, border 0.3s;
+  transition: color 0.3s, border 0.3s, background 0.3s;
 }  
 #wallet:hover {
   border: 2px solid var(--orange);
+  background: var(--sand4);
   cursor: pointer;
 } 
 #wallet img {
@@ -67,4 +76,113 @@ header {
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-end;
+} */
+
+main {
+  display: flex;
+  height: 90vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#scroll-container {
+  width: 680px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#scroll-top {
+  z-index: 1;
+  transform: translateY(60px);
+}
+
+#scroll-middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  z-index: 2;
+  align-self: center;
+  transition: height 2s;
+  transform: translateY(-10px);
+  position: relative;
+}
+#scroll-txt {
+  transform: translateY(-30px);
+  width: 440px;
+  position: absolute;
+  /* transition: opacity 0.7s; */
+  /* opacity: 0; */
+}
+#scroll-middle p {
+  text-align: center;
+  color: var(--brown);
+  z-index: 3;
+}
+#scroll-middle-svg {
+  width: 440px;
+}
+
+#scroll-middle p.title {
+  margin-bottom: 40px;
+}
+
+#scroll-middle p.distance {
+  font-size: 38px;
+  color: var(--sand);
+  margin: 10px 0;
+
+  transition: color 0.2s;
+}
+#scroll-middle p.distance:hover {
+  color: var(--brown);
+  cursor: pointer;
+}
+#scroll-middle p.distance svg {
+  margin: 0 10px;
+}
+#scroll-middle p.distance svg path {
+  fill: var(--sand);
+}
+#scroll-middle p.distance span.px {
+  font-size: 24px;
+}
+
+#scroll-middle .btn {
+  width: 50px;
+  text-align: center;
+  align-self: center;
+  margin: 40px auto 0 auto;
+  padding: 3px 12px;
+  border-radius: 50px;
+
+  color: var(--brown);
+  border: 2px solid var(--sand);
+
+  transition: color 0.3s, border 0.3s, background 0.3s;
+}
+#scroll-middle .btn:hover {
+  border: 2px solid var(--orange);
+  cursor: pointer;
+  color: var(--black);
+  background: var(--sand3);
+}
+#scroll-middle-svg {
+  transition: height 1s;
+  background: linear-gradient(to bottom, #F5EFE7, #d0cac2);
+}
+
+#scroll-bottom {
+  align-self: flex-end;
+  transition: transform 2s;
+  transform: translateY(-70px);
+
+  z-index: 4;
+}
+
+/* footer {
+  height: 10vh;
 } */
