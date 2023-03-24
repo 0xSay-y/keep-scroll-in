@@ -2,6 +2,7 @@
 ~ on going
 o done
 ? reflexion
+x nope
 
 ------------------------
 
@@ -13,20 +14,21 @@ DESIGN @ Figma
 
 WWW
   ~ Backend setup
-  ~ HTML + CSS structure
+  o HTML + CSS structure
   ~ React app
   o Metamask integration
-  o Faucet integration
-  - Game integration
+  o Faucet integration 
+  o Game integration
   ~ JS animation
-  ? Sound effect?
+  x Sound effect?
 
 SMART CONTRACTS
   o Token (0x41485c5Fd37B1a4d892f2f4b668398242AE4f981)
       https://blockscout.scroll.io/address/0x41485c5Fd37B1a4d892f2f4b668398242AE4f981
   o Faucet (0xa1f7Ee880e7fD47d692606FAcBe757AB62c2deF3)
       https://blockscout.scroll.io/address/0xa1f7Ee880e7fD47d692606FAcBe757AB62c2deF3
-  ~ Game
+  o Game (0x68cd17A476E31Aa16f5e2c0d1463D356f658fB16)
+      https://blockscout.scroll.io/address/0x68cd17A476E31Aa16f5e2c0d1463D356f658fB16
 
 VIDEO
   - Record app
@@ -35,4 +37,4 @@ VIDEO
 
 ------------------------
 
-21/03/23
+24/03/23

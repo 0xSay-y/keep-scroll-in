@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import "./App.css"
 import { ethers } from "ethers"
 import faucetContract from "./ethereum/faucet"
-const ERC20ABI = require('./ethereum/ERC20.json');
+import gameContract from "./ethereum/game"
+const ERC20ABI = require('./ethereum/ERC20.json')
 
 function App() {
-  // FAUCET
+  // WALLET
   const [walletAddress, setWalletAddress] = useState("")
   const [signer, setSigner] = useState()
   const [contract, setContract] = useState()
@@ -73,6 +74,7 @@ function App() {
     }
   }
 
+  // FAUCET
   const getKSI = async () => {
     try {
       const contractWithSigner = contract.connect(signer)
@@ -82,13 +84,18 @@ function App() {
     }
   }
 
-  // const getBalance = async () => {
-  //   try {
+  // DISTANCE
+  const [select1, setDistance1] = useState('')
+  const [select2, setDistance2] = useState('')
 
-  //   } catch (err) {
-      
-  //   }  
-  // }
+  const selectDistance1 = () => {
+    select1 ? setDistance1('') : setDistance1('distance selected')
+    setDistance2('')
+  };
+  const selectDistance2 = () => {
+    select2 ? setDistance2('') : setDistance2('distance selected')
+    setDistance1('')
+  };
 
   // SCROLL
   const [isOpen, setOpen] = useState(false)
@@ -102,18 +109,40 @@ function App() {
     } else {
       setOpen(true)
     }
+    
+    setDistance1('')
+    setDistance2('')
   }
 
-  // window.scrollBy({
-  //   top: 300,
-  //   left: 0,
-  //   behavior: "smooth",
-  // })
+  // GAME
+  const [game, setGame] = useState()
+  
+  const startGame = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    setGame(gameContract(provider))
 
-  // const middle = document.getElementById("scroll-middle-svg")
-  // setTimeout(() => {
-  //   middle.style.height = "400px"
-  // }, 500)
+    try {
+      const tx = {
+        to: "0x68cd17A476E31Aa16f5e2c0d1463D356f658fB16",
+        value: 1000000000000000
+      };
+      await signer.sendTransaction(tx).then((transferResult) => {
+        console.dir(transferResult)
+      })
+
+      game.once("Status", (msg, user, winner) => {
+        console.log(msg, user, winner)
+        if (winner == true) {
+          updateScroll()
+          // update js anim + random distance
+        } else {
+          // update js anim + random distance
+        }
+      })
+    } catch (err) {
+      console.log(err)
+    } 
+  }
 
   return (
     <div>
@@ -123,7 +152,7 @@ function App() {
 
           <div id="nav">
             <div className="btn" id="btn-play" onClick={updateScroll}>Play</div>
-            <div className="btn" id="btn-faucet" onClick={getKSI}>Faucet</div>
+            <div className="btn" id="btn-faucet"><a href="https://goerlifaucet.com/" target="_blank">Faucet</a></div>
             <div className="btn" id="btn-faq">FAQ</div>
           </div>
 
@@ -132,10 +161,6 @@ function App() {
             <p>{walletAddress.length > 0 ? `${walletAddress.substring(0,4)}...${walletAddress.substring(38)}` : "Connection"}</p>
           </div>
         </div>
-
-        {/* <div id="header-bottom">
-          <p id="wallet-amount">{KSIbalance !== 0 ? "Your balance: " `${KSIbalance.toString()}` : "Your balance: 0.00 KSI"}</p>
-        </div> */}
       </header>
       
       <main>
@@ -172,7 +197,7 @@ function App() {
             <div id="scroll-txt" style={{'opacity':`${isOpen ? 1 : 0}`, 'transition': `${isOpen ? 'opacity 2.5s' : 'opacity 0.5s'}`}}>
               <p className="title">Select a distance:</p>
 
-              <p className="distance">
+              <p className={select1 || 'distance' } onClick={selectDistance1}>
                 <span>0<span className="px">px</span></span>
                 <svg width="59" height="24" viewBox="0 0 59 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.93934 10.9393C0.353553 11.5251 0.353553 12.4749 0.93934 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807611 11.0711 0.807611 10.4853 1.3934L0.93934 10.9393ZM58.0607 13.0607C58.6465 12.4749 58.6465 11.5251 58.0607 10.9393L48.5147 1.3934C47.9289 0.807611 46.9792 0.807611 46.3934 1.3934C45.8076 1.97919 45.8076 2.92893 46.3934 3.51472L54.8787 12L46.3934 20.4853C45.8076 21.0711 45.8076 22.0208 46.3934 22.6066C46.9792 23.1924 47.9289 23.1924 48.5147 22.6066L58.0607 13.0607ZM2 13.5H57V10.5H2V13.5Z"/>
@@ -180,7 +205,7 @@ function App() {
                 <span>1000<span className="px">px</span></span>
               </p>
               
-              <p className="distance">
+              <p className={select2 || 'distance' } onClick={selectDistance2}>
                 <span>1000<span className="px">px</span></span>
                 <svg width="59" height="24" viewBox="0 0 59 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.93934 10.9393C0.353553 11.5251 0.353553 12.4749 0.93934 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807611 11.0711 0.807611 10.4853 1.3934L0.93934 10.9393ZM58.0607 13.0607C58.6465 12.4749 58.6465 11.5251 58.0607 10.9393L48.5147 1.3934C47.9289 0.807611 46.9792 0.807611 46.3934 1.3934C45.8076 1.97919 45.8076 2.92893 46.3934 3.51472L54.8787 12L46.3934 20.4853C45.8076 21.0711 45.8076 22.0208 46.3934 22.6066C46.9792 23.1924 47.9289 23.1924 48.5147 22.6066L58.0607 13.0607ZM2 13.5H57V10.5H2V13.5Z"/>
@@ -188,7 +213,7 @@ function App() {
                 <span>2000<span className="px">px</span></span>
               </p>
 
-              <div className="btn" id="btn-start">Start</div>
+              <div className="btn" id="btn-start" onClick={startGame}>Bet: &nbsp; .001 gETH</div>
             </div>
         
             <svg width="440" height={`${isOpen ? '60vh' : '120px'}`} id="scroll-middle-svg" fill="none" xmlns="http://www.w3.org/2000/svg">

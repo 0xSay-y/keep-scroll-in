@@ -39,6 +39,14 @@ header {
   border: 2px solid var(--pink);
   color: var(--black);
 }
+#nav .btn a {
+  color: var(--grey);
+  text-decoration: none;
+  transition: color 0.3s, border 0.3s, background 0.3s;
+}
+#nav .btn:hover a {
+  color: var(--black);
+}
 
 #logo p {
   font-family: "TTNorms";
@@ -111,7 +119,7 @@ main {
   position: relative;
 }
 #scroll-txt {
-  transform: translateY(-30px);
+  transform: translateY(-40px);
   width: 440px;
   position: absolute;
   /* transition: opacity 0.7s; */
@@ -127,7 +135,7 @@ main {
 }
 
 #scroll-middle p.title {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 #scroll-middle p.distance {
@@ -141,6 +149,9 @@ main {
   color: var(--brown);
   cursor: pointer;
 }
+#scroll-middle p.selected {
+  color: var(--brown);
+}
 #scroll-middle p.distance svg {
   margin: 0 10px;
 }
@@ -152,10 +163,10 @@ main {
 }
 
 #scroll-middle .btn {
-  width: 50px;
+  width: 120px;
   text-align: center;
   align-self: center;
-  margin: 40px auto 0 auto;
+  margin: 70px auto 0 auto;
   padding: 3px 12px;
   border-radius: 50px;
 

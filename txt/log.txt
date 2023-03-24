@@ -35,3 +35,9 @@
 21/03/23
   - React app: nav / scroll 
   - Game contract: continuation
+
+22/03/23 
+  - Game contract: bug with KSI token integration
+
+23/03/23
+  - Game contract: continuation w/ ETH as msg.value
