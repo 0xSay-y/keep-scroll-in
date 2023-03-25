@@ -1,6 +1,6 @@
 @font-face {
   font-family: "TTNorms";
-  src: url("TTNorms-Medium.ttf");
+  src: url("./ttf/TTNorms-Medium.ttf");
 }
 
 @keyframes fadein {

@@ -3,8 +3,8 @@ import "./App.css"
 import { ethers } from "ethers"
 import faucetContract from "./js/faucet"
 import gameContract from "./js/game"
-const ERC20ABI = require('./ethereum/ERC20.json')
-const randomNb = require('./scripts/randomNb.json')
+const ERC20ABI = require('./json/ERC20.json')
+const randomNb = require('./py/randomNb.json')
 
 function App() {
   // WALLET
@@ -27,9 +27,9 @@ function App() {
         setContract(faucetContract(provider))
         setWalletAddress(accounts[0])
 
-        const KSIaddress = "0x41485c5Fd37B1a4d892f2f4b668398242AE4f981"
-        const KSI = new ethers.Contract(KSIaddress, ERC20ABI, provider)
-        const KSIbalance = await KSI.balanceOf(accounts[0]) / 10**18
+        // const KSIaddress = "0x41485c5Fd37B1a4d892f2f4b668398242AE4f981"
+        // const KSI = new ethers.Contract(KSIaddress, ERC20ABI, provider)
+        // const KSIbalance = await KSI.balanceOf(accounts[0]) / 10**18
         // console.log(KSIbalance.toString())
       } catch (err) {
         setWalletAddress("")
@@ -239,9 +239,8 @@ function App() {
         const finalPx = distance.toString()
         setDistancePx(finalPx + "px")
         updateScrollGame(finalPx)
-
-        setMsg(msg) // NEW
-        setFinalDistance(finalPx + "px") // NEW
+        setMsg(msg)
+        setFinalDistance(finalPx + "px")
 
         console.log("Final nb: " + distance + "px")
         console.log("Result: " + msg)
