@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f28079b4.css",
+    "main.js": "/static/js/main.2cd22369.js",
+    "static/media/TTNorms-Medium.ttf": "/static/media/TTNorms-Medium.c958a935e452ab13744e.ttf",
+    "index.html": "/index.html",
+    "main.f28079b4.css.map": "/static/css/main.f28079b4.css.map",
+    "main.2cd22369.js.map": "/static/js/main.2cd22369.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f28079b4.css",
+    "static/js/main.2cd22369.js"
+  ]
+}

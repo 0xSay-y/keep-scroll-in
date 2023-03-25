@@ -3,8 +3,8 @@ import "./App.css"
 import { ethers } from "ethers"
 import faucetContract from "./js/faucet"
 import gameContract from "./js/game"
+import axios from 'axios'
 const ERC20ABI = require('./json/ERC20.json')
-const randomNb = require('./py/randomNb.json')
 
 function App() {
   // WALLET
@@ -193,8 +193,7 @@ function App() {
         to: "0x68cd17A476E31Aa16f5e2c0d1463D356f658fB16",
         value: 1000000000000000
       }
-      const nb = randomNb["nb"]
-
+  
       if (select1 == 'distance selected') {
         console.log("Choice: 1000px <-> 1500px")
       } else if (select2 == 'distance selected') {
@@ -210,41 +209,44 @@ function App() {
       }, 1000)
 
       const resultGame = game.once("Status", (msg, signer, winner) => {
-        let distance = 0
+        axios.get('../random/nb.json').then(res => {
+          let nb = res.data['nb']
+          let distance = 0
 
-        if (winner == true) {
-          if (select1 == 'distance selected' && nb < 1500) {
-            distance += nb
-          } else if (select1 == 'distance selected' && nb > 1500) {
-            distance += nb - 500
-          } else if (select2 == 'distance selected' && nb < 1500) {
-            distance += nb + 500
-          } else if (select2 == 'distance selected' && nb > 1500) {
-            distance += nb
+          if (winner == true) {
+            if (select1 == 'distance selected' && nb < 1500) {
+              distance += nb
+            } else if (select1 == 'distance selected' && nb > 1500) {
+              distance += nb - 500
+            } else if (select2 == 'distance selected' && nb < 1500) {
+              distance += nb + 500
+            } else if (select2 == 'distance selected' && nb > 1500) {
+              distance += nb
+            }
+            setColor('green result-distance')
+          } else {
+            if (select1 == 'distance selected' && nb < 1500) {
+              distance += nb + 500
+            } else if (select1 == 'distance selected' && nb > 1500) {
+              distance += nb
+            } else if (select2 == 'distance selected' && nb < 1500) {
+              distance += nb
+            } else if (select2 == 'distance selected' && nb > 1500) {
+              distance += nb - 500
+            }
+            setColor('red result-distance')
           }
-          setColor('green result-distance')
-        } else {
-          if (select1 == 'distance selected' && nb < 1500) {
-            distance += nb + 500
-          } else if (select1 == 'distance selected' && nb > 1500) {
-            distance += nb
-          } else if (select2 == 'distance selected' && nb < 1500) {
-            distance += nb
-          } else if (select2 == 'distance selected' && nb > 1500) {
-            distance += nb - 500
-          }
-          setColor('red result-distance')
-        }
 
-        const finalPx = distance.toString()
-        setDistancePx(finalPx + "px")
-        updateScrollGame(finalPx)
-        setMsg(msg)
-        setFinalDistance(finalPx + "px")
+          const finalPx = distance.toString()
+          setDistancePx(finalPx + "px")
+          updateScrollGame(finalPx)
+          setMsg(msg)
+          setFinalDistance(finalPx + "px")
 
-        console.log("Final nb: " + distance + "px")
-        console.log("Result: " + msg)
-        console.log("--")
+          console.log("Final nb: " + distance + "px")
+          console.log("Result: " + msg)
+          console.log("--")
+        })
       })
     } catch (err) {
       console.log(err)
