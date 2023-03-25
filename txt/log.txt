@@ -41,3 +41,11 @@
 
 23/03/23
   - Game contract: continuation w/ ETH as msg.value
+
+24/03/23
+  - Game contract: integration 
+  - React app w/ FAQ + Scroll animation
+  - css cleaning
+
+25/03/23
+  -

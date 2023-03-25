@@ -8,6 +8,19 @@
   50% { opacity: 0; }
   100% { opacity: 1; }
 }
+@keyframes fadein2 {
+  0% { opacity: 0; }
+  25% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes rotate {
+  0% { transform: rotate(180deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes move {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-20px); }
+}
 
 :root {
   --black: #000000;
@@ -18,6 +31,7 @@
   --sand2: #E0D4C3;
   --sand3: #e4ded5;
   --sand4: #f3f0ebc3;
+  --sand5: #b9ad9c;
   --brown: #333333;
   --orange: #FF8D1F;
   --green: #4FBF90;
@@ -31,7 +45,6 @@ html, body {
 
   background-color: var(--light);
 }
-
 body {
   width: 100vw;
   height: 100vh;
@@ -41,11 +54,7 @@ body {
 
   display: flex;
   justify-content: center;
-  /* align-items: center; */
-  /* position: absolute; */
 
   font-family: "TTNorms";
   cursor: default;
-
-  animation: fadein 1.5s;
 }

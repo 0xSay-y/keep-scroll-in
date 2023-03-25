@@ -1,3 +1,4 @@
+/* HEADER */
 header {
   height: 10vh;
   width: 80vw;
@@ -5,17 +6,27 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
 
   z-index: 10;
-}
 
-#header-top, #nav, #wallet {
+  animation: fadein 3s;
+}
+#header-container, #nav, #wallet {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
+/* LOGO */
+#logo p {
+  font-size: 24px;
+}
+#logo p span {
+  color: var(--grey);
+}
+
+/* NAV */
 #nav {
   width: 22vw;
   z-index: 10;
@@ -26,6 +37,7 @@ header {
 
   color: var(--grey);
   border: 2px solid transparent;
+  font-size:16px;
 
   transition: color 0.3s, border 0.3s, background 0.3s;
 }
@@ -48,20 +60,10 @@ header {
   color: var(--black);
 }
 
-#logo p {
-  font-family: "TTNorms";
-  font-size: 24px;
-}
-#logo span {
-  color: var(--grey);
-}
-
-.btn, #wallet p {
-  font-size:16px;
-}
-
+/* WALLET */
 #wallet {
   padding: 3px 12px;
+  width: 116px;
   border-radius: 50px;
   border: 2px solid var(--pink);
   transition: color 0.3s, border 0.3s, background 0.3s;
@@ -78,34 +80,42 @@ header {
 #wallet p {
   margin: 0;
   padding: 0;
+  font-size:16px;
 }
-/* #header-bottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-} */
 
+/* MAIN */
 main {
   display: flex;
   height: 90vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  animation: fadein2 2.5s;
 }
 
+/* SCROLL */
 #scroll-container {
   width: 680px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
-
+.rotate {
+  transform-origin: center;
+  animation: 2.5s rotate 1;
+}
+.move {
+  transform-origin: center;
+  animation: 1s move infinite alternate;
+}
+/* SCROLL TOP */
 #scroll-top {
   z-index: 1;
   transform: translateY(60px);
 }
 
+/* SCROLL MIDDLE */
 #scroll-middle {
   display: flex;
   flex-direction: column;
@@ -118,51 +128,48 @@ main {
   transform: translateY(-10px);
   position: relative;
 }
-#scroll-txt {
+#scroll-txt, #scroll-faq {
   transform: translateY(-40px);
   width: 440px;
   position: absolute;
-  /* transition: opacity 0.7s; */
-  /* opacity: 0; */
 }
-#scroll-middle p {
+
+/* SCROLL MIDDLE TXT */
+#scroll-txt {
+  z-index: 10;
+}
+#scroll-txt p {
   text-align: center;
   color: var(--brown);
   z-index: 3;
 }
-#scroll-middle-svg {
-  width: 440px;
-}
-
-#scroll-middle p.title {
+#scroll-txt p.title {
   margin-bottom: 30px;
 }
-
-#scroll-middle p.distance {
+#scroll-txt p.distance {
   font-size: 38px;
   color: var(--sand);
   margin: 10px 0;
 
-  transition: color 0.2s;
+  transition: color 0.3s;
 }
-#scroll-middle p.distance:hover {
+#scroll-txt p.distance:hover {
   color: var(--brown);
   cursor: pointer;
 }
-#scroll-middle p.selected {
+#scroll-txt p.selected {
   color: var(--brown);
 }
-#scroll-middle p.distance svg {
+#scroll-txt p.distance svg {
   margin: 0 10px;
 }
-#scroll-middle p.distance svg path {
+#scroll-txt p.distance svg path {
   fill: var(--sand);
 }
-#scroll-middle p.distance span.px {
+#scroll-txt p.distance span.px {
   font-size: 24px;
 }
-
-#scroll-middle .btn {
+#scroll-txt .btn {
   width: 120px;
   text-align: center;
   align-self: center;
@@ -170,22 +177,97 @@ main {
   padding: 3px 12px;
   border-radius: 50px;
 
-  color: var(--brown);
+  color: var(--sand5);
+  pointer-events: none;
   border: 2px solid var(--sand);
 
   transition: color 0.3s, border 0.3s, background 0.3s;
 }
-#scroll-middle .btn:hover {
+#scroll-txt .ok {
+  border: 2px solid var(--brown);
+  color: var(--brown);
+  pointer-events: all;
+}
+#scroll-txt .ok:hover {
   border: 2px solid var(--orange);
   cursor: pointer;
   color: var(--black);
   background: var(--sand3);
 }
+
+/* SCROLL MIDDLE FAQ */
+#scroll-faq p {
+  text-align: center;
+  padding: 0 30px;
+}
+#scroll-faq p.answer {
+  color: var(--grey);
+  font-size: 13px;
+}
+#scroll-faq p.title {
+  margin: 35px 0 15px 0;
+}
+#scroll-faq p.title-first {
+  margin: 15px 0 15px 0;
+}
+#scroll-faq p span {
+  color: var(--brown);
+}
+
+/* SCROLL MIDDLE RESULT */
+#scroll-result {
+  transform: translateY(150px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 440px;
+  position: absolute;
+
+  background: rebeccapurple;
+}
+#scroll-result p {
+  text-align: center;
+  padding: 0 50px;
+}
+#scroll-result p.poem-txt {
+  color: var(--sand5);
+  font-size: 13px;
+  font-family: 'Times New Roman', Times, serif;
+  margin-bottom: 20px;
+}
+#scroll-result p.poem-txt span {
+  display: none;
+}
+#scroll-result p.result {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+ margin-top: 100px;
+}
+#scroll-result span.result-msg {
+  color: var(--brown);
+}
+#scroll-result span.result-distance {
+  font-size: 38px;
+}
+#scroll-result span.green {
+  color: var(--green)
+}
+#scroll-result span.red {
+  color: var(--red)
+}
+
+/* SCROLL MIDDLE SVG */
 #scroll-middle-svg {
   transition: height 1s;
   background: linear-gradient(to bottom, #F5EFE7, #d0cac2);
 }
 
+/* SCROLL BOTTOM */
 #scroll-bottom {
   align-self: flex-end;
   transition: transform 2s;
@@ -194,6 +276,3 @@ main {
   z-index: 4;
 }
 
-/* footer {
-  height: 10vh;
-} */

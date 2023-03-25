@@ -13,13 +13,15 @@ DESIGN @ Figma
   o Logo + icon
 
 WWW
-  ~ Backend setup
   o HTML + CSS structure
-  ~ React app
+  o React app
   o Metamask integration
   o Faucet integration 
   o Game integration
-  ~ JS animation
+  o JS animation
+  o Script json + Distance setting
+  - Wait animation 
+  ~ Backend setup
   x Sound effect?
 
 SMART CONTRACTS
@@ -37,4 +39,4 @@ VIDEO
 
 ------------------------
 
-24/03/23
+25/03/23

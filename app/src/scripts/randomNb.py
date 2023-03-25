@@ -8,7 +8,7 @@ import random
 def job():
   try:
     nb_data = {}
-    nb = random.randint(0, 4000)
+    nb = random.randint(1000, 3000)
     nb_data['nb'] = nb
 
     with open('randomNb.json', 'w', encoding='utf-8') as final_nb:
@@ -20,4 +20,4 @@ schedule.every(1).seconds.do(job)
 
 while True:
   schedule.run_pending()
-  time.sleep(1)
+  time.sleep(15)

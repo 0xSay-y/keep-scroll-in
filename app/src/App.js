@@ -4,10 +4,11 @@ import { ethers } from "ethers"
 import faucetContract from "./ethereum/faucet"
 import gameContract from "./ethereum/game"
 const ERC20ABI = require('./ethereum/ERC20.json')
+const randomNb = require('./scripts/randomNb.json')
 
 function App() {
   // WALLET
-  const [walletAddress, setWalletAddress] = useState("")
+  const [walletAddress, setWalletAddress] = useState('')
   const [signer, setSigner] = useState()
   const [contract, setContract] = useState()
 
@@ -36,7 +37,6 @@ function App() {
       }
     }
   }
-
   const getConnectedWallet = async () => {
     if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
       try {
@@ -56,7 +56,6 @@ function App() {
       }
     }
   }
-
   const changeWallet = async () => {
     if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
       try {
@@ -75,47 +74,114 @@ function App() {
   }
 
   // FAUCET
-  const getKSI = async () => {
-    try {
-      const contractWithSigner = contract.connect(signer)
-      const resp = await contractWithSigner.requestTokens()
-    } catch (err) {
-      console.error(err.message)
+  // const getKSI = async () => {
+  //   try {
+  //     const contractWithSigner = contract.connect(signer)
+  //     const resp = await contractWithSigner.requestTokens()
+  //   } catch (err) {
+  //     console.error(err.message)
+  //   }
+  // }
+
+  // SCROLL
+  const [isGameOpen, setGameOpen] = useState(false)
+  const [isFaqOpen, setFaqOpen] = useState(false)
+  const [isResultOpen, setResultOpen] = useState(false)
+  const [showResult, setShowResult] = useState(false)
+  const [scrollMove, setScrollMove] = useState('rotate')
+
+  const updateScrollPlay = () => {
+    if (isGameOpen == true || isGameOpen == false && isFaqOpen == true || isGameOpen == false && isResultOpen == true) {
+      if (isGameOpen == false && isResultOpen == true) {
+        setTimeout(() => {
+          setGameOpen(true)
+        }, 1100) 
+      } else {
+        setTimeout(() => {
+          setGameOpen(true)
+        }, 800)
+      }
+      setGameOpen(false)
+      setFaqOpen(false)
+      setResultOpen(false)
+      setShowResult(false)
+    } else {
+      setGameOpen(true)
+      setFaqOpen(false)
+      setResultOpen(false)
     }
+    
+    setDistance1('')
+    setDistance2('')
+    setBtnOk('btn')
+    setScrollMove('')
+    setDistancePx('500px')
+  }
+  const updateScrollFAQ = () => {
+    if (isFaqOpen == true || isFaqOpen == false && isGameOpen == true || isFaqOpen == false && isResultOpen == true) {
+      if (isFaqOpen == false && isResultOpen == true) {
+        setTimeout(() => {
+          setFaqOpen(true)
+        }, 1100) 
+      } else {
+        setTimeout(() => {
+          setFaqOpen(true)
+        }, 800)
+      }
+      setGameOpen(false)
+      setFaqOpen(false)
+      setResultOpen(false)
+      setShowResult(false)
+    } else {
+      setFaqOpen(true)
+      setGameOpen(false)
+      setResultOpen(false)
+    }
+    
+    setDistance1('')
+    setDistance2('')
+    setBtnOk('btn')
+    setScrollMove('')
+    setDistancePx('500px')
+  }
+  const updateScrollGame = (distanceGame) => {
+    // setGameOpen(false)
+    // setFaqOpen(false)
+    setTimeout(() => {
+      setResultOpen(true)
+      setShowResult(true)
+    }, 1000)
+
+    setTimeout(() => {
+      document.body.scrollBy({
+        top: document.body.scrollHeight,
+        left: 0,
+        behavior: "smooth",
+      })
+    }, 2000)
+
+    setDistancePx(distanceGame)
   }
 
   // DISTANCE
   const [select1, setDistance1] = useState('')
   const [select2, setDistance2] = useState('')
+  const [btnBet, setBtnOk] = useState('')
 
   const selectDistance1 = () => {
     select1 ? setDistance1('') : setDistance1('distance selected')
     setDistance2('')
+    select1 ? setBtnOk('btn') : setBtnOk('btn ok')
   };
   const selectDistance2 = () => {
     select2 ? setDistance2('') : setDistance2('distance selected')
     setDistance1('')
+    select2 ? setBtnOk('btn') : setBtnOk('btn ok')
   };
-
-  // SCROLL
-  const [isOpen, setOpen] = useState(false)
-
-  const updateScroll = () => {
-    if (isOpen == true) {
-      setOpen(false)
-      setTimeout(() => {
-        setOpen(true)
-      }, 1000)
-    } else {
-      setOpen(true)
-    }
-    
-    setDistance1('')
-    setDistance2('')
-  }
 
   // GAME
   const [game, setGame] = useState()
+  const [distancePx, setDistancePx] = useState()
   
   const startGame = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -125,19 +191,59 @@ function App() {
       const tx = {
         to: "0x68cd17A476E31Aa16f5e2c0d1463D356f658fB16",
         value: 1000000000000000
-      };
-      await signer.sendTransaction(tx).then((transferResult) => {
-        console.dir(transferResult)
-      })
+      }
+      const nb = randomNb["nb"]
+      // console.log("Random nb: " + nb)
 
-      game.once("Status", (msg, user, winner) => {
-        console.log(msg, user, winner)
+      if (select1 == 'distance selected') {
+        console.log("Choice: 1")
+      } else if (select2 == 'distance selected') {
+        console.log("Choice: 2")
+      }
+
+      await signer.sendTransaction(tx)
+
+      setGameOpen(false) // NEW
+      setFaqOpen(false) // NEW
+      setTimeout(() => {
+        setScrollMove('move') // NEW
+      }, 1000)
+
+      const resultGame = game.once("Status", (msg, signer, winner) => {
+        console.log("Result: " + msg)
+        let distance = 0
+
         if (winner == true) {
-          updateScroll()
-          // update js anim + random distance
+          if (select1 == 'distance selected' && nb < 2000) {
+            distance += nb
+          } else if (select1 == 'distance selected' && nb > 2000) {
+            distance += nb - 1000
+          } else if (select2 == 'distance selected' && nb < 2000) {
+            distance += nb + 1000
+          } else if (select2 == 'distance selected' && nb > 2000) {
+            distance += nb
+          }
         } else {
-          // update js anim + random distance
+          if (select1 == 'distance selected' && nb < 2000) {
+            distance += nb + 1000
+          } else if (select1 == 'distance selected' && nb > 2000) {
+            distance += nb
+          } else if (select2 == 'distance selected' && nb < 2000) {
+            distance += nb
+          } else if (select2 == 'distance selected' && nb > 2000) {
+            distance += nb - 1000
+          }          
         }
+
+        const finalPx = distance.toString()
+        setDistancePx(finalPx + "px")
+        updateScrollGame(finalPx)
+        // setTimeout(() => {
+        //   updateScrollGame(finalPx) // NEW
+        // }, 16000)
+
+        console.log("Final nb: " + distance)
+        console.log("--")
       })
     } catch (err) {
       console.log(err)
@@ -147,13 +253,13 @@ function App() {
   return (
     <div>
       <header>
-        <div id="header-top">
+        <div id="header-container">
           <div id="logo"><p><span>Keep</span> Scroll <span>in</span></p></div>
 
           <div id="nav">
-            <div className="btn" id="btn-play" onClick={updateScroll}>Play</div>
+            <div className="btn" id="btn-play" onClick={updateScrollPlay}>Play</div>
             <div className="btn" id="btn-faucet"><a href="https://goerlifaucet.com/" target="_blank">Faucet</a></div>
-            <div className="btn" id="btn-faq">FAQ</div>
+            <div className="btn" id="btn-faq" onClick={updateScrollFAQ}>FAQ</div>
           </div>
 
           <div id="wallet" onClick={connectWallet}>
@@ -164,7 +270,7 @@ function App() {
       </header>
       
       <main>
-        <div id="scroll-container">
+        <div id="scroll-container" className={scrollMove}>
           <div id="scroll-top">
             <svg width="560" height="120" viewBox="0 0 560 120" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="-0.00012207" width="560" height="120" rx="60" fill="url(#paint0_linear_61_9)"/>
@@ -194,29 +300,127 @@ function App() {
           </div>
 
           <div id="scroll-middle">
-            <div id="scroll-txt" style={{'opacity':`${isOpen ? 1 : 0}`, 'transition': `${isOpen ? 'opacity 2.5s' : 'opacity 0.5s'}`}}>
+            <div id="scroll-txt" style={{'opacity':`${isGameOpen ? 1 : 0}`, 'transition': `${isGameOpen ? 'opacity 2.5s' : 'opacity 0.5s'}`, 'pointer-events':`${isGameOpen ? "all" : "none"}`}}>
               <p className="title">Select a distance:</p>
 
-              <p className={select1 || 'distance' } onClick={selectDistance1}>
-                <span>0<span className="px">px</span></span>
-                <svg width="59" height="24" viewBox="0 0 59 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0.93934 10.9393C0.353553 11.5251 0.353553 12.4749 0.93934 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807611 11.0711 0.807611 10.4853 1.3934L0.93934 10.9393ZM58.0607 13.0607C58.6465 12.4749 58.6465 11.5251 58.0607 10.9393L48.5147 1.3934C47.9289 0.807611 46.9792 0.807611 46.3934 1.3934C45.8076 1.97919 45.8076 2.92893 46.3934 3.51472L54.8787 12L46.3934 20.4853C45.8076 21.0711 45.8076 22.0208 46.3934 22.6066C46.9792 23.1924 47.9289 23.1924 48.5147 22.6066L58.0607 13.0607ZM2 13.5H57V10.5H2V13.5Z"/>
-                </svg>
-                <span>1000<span className="px">px</span></span>
-              </p>
-              
-              <p className={select2 || 'distance' } onClick={selectDistance2}>
+              <p className={select1 || 'distance'} id="distance1" onClick={selectDistance1}>
                 <span>1000<span className="px">px</span></span>
                 <svg width="59" height="24" viewBox="0 0 59 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.93934 10.9393C0.353553 11.5251 0.353553 12.4749 0.93934 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807611 11.0711 0.807611 10.4853 1.3934L0.93934 10.9393ZM58.0607 13.0607C58.6465 12.4749 58.6465 11.5251 58.0607 10.9393L48.5147 1.3934C47.9289 0.807611 46.9792 0.807611 46.3934 1.3934C45.8076 1.97919 45.8076 2.92893 46.3934 3.51472L54.8787 12L46.3934 20.4853C45.8076 21.0711 45.8076 22.0208 46.3934 22.6066C46.9792 23.1924 47.9289 23.1924 48.5147 22.6066L58.0607 13.0607ZM2 13.5H57V10.5H2V13.5Z"/>
                 </svg>
                 <span>2000<span className="px">px</span></span>
               </p>
+              
+              <p className={select2 || 'distance'} id="distance2" onClick={selectDistance2}>
+                <span>2000<span className="px">px</span></span>
+                <svg width="59" height="24" viewBox="0 0 59 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.93934 10.9393C0.353553 11.5251 0.353553 12.4749 0.93934 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807611 11.0711 0.807611 10.4853 1.3934L0.93934 10.9393ZM58.0607 13.0607C58.6465 12.4749 58.6465 11.5251 58.0607 10.9393L48.5147 1.3934C47.9289 0.807611 46.9792 0.807611 46.3934 1.3934C45.8076 1.97919 45.8076 2.92893 46.3934 3.51472L54.8787 12L46.3934 20.4853C45.8076 21.0711 45.8076 22.0208 46.3934 22.6066C46.9792 23.1924 47.9289 23.1924 48.5147 22.6066L58.0607 13.0607ZM2 13.5H57V10.5H2V13.5Z"/>
+                </svg>
+                <span>3000<span className="px">px</span></span>
+              </p>
 
-              <div className="btn" id="btn-start" onClick={startGame}>Bet: &nbsp; .001 gETH</div>
+              <div className={btnBet || 'btn'} id="btn-start" onClick={startGame}>Bet: &nbsp; .001 gETH</div>
+            </div>
+
+            <div id="scroll-faq" style={{'opacity':`${isFaqOpen ? 1 : 0}`, 'transition': `${isFaqOpen ? 'opacity 4s' : 'opacity 0.4s'}`, 'pointer-events':`${isFaqOpen ? "all" : "none"}`}}>
+              <p className="title title-first">What is this?</p>
+              <p className="answer">
+                A double or nothing game.<br></br>
+                Built on Scroll testnet in order to bring<br></br>
+                a playful usecase to the protocol.
+              </p>
+
+              <p className="title">How can I play?</p>
+              <p className="answer">
+                <span>1/</span>&nbsp; Connect your wallet on the top right corner.<br></br>
+                <span>2/</span>&nbsp; Click on Play &gt; choose a distance &gt; click on Bet.<br></br>
+                <span>3/</span>&nbsp; Accept the transaction and wait for the result.
+              </p>
+
+              <p className="title">Is it free?</p>
+              <p className="answer">
+                Yes! Users can bet with Goerli ETH, which are<br></br>
+                available to claim for free on Alchemy.<br></br>
+                Click the faucet button to go to their website.
+              </p>
+            </div>
+
+            <div id="scroll-result" style={{'opacity':`${isResultOpen ? 1 : 0}`, 'transition': `${isResultOpen ? 'opacity 4s' : 'opacity 4s'}`, 'height': `${isResultOpen ? 'auto' : 'auto'}`}}>
+
+              <p className="poem-txt" style={{'display':`${distancePx > 1000 ? "block" : "none"}`}}>
+                <span>1/</span> ἀμφί μοι Ἑρμείαο φίλον γόνον ἔννεπε, Μοῦσα,
+                αἰγιπόδην, δικέρωτα, φιλόκροτον, ὅστ᾽ ἀνὰ πίση
+                δενδρήεντ᾽ ἄμυδις φοιτᾷ χορογηθέσι νύμφαις,
+                αἵ τε κατ᾽ αἰγίλιπος πέτρης στείβουσι κάρηνα
+                5Πᾶν᾽ ἀνακεκλόμεναι, νόμιον θεόν, ἀγλαέθειρον,
+                αὐχμήενθ᾽, ὃς πάντα λόφον νιφόεντα λέλογχε
+                καὶ κορυφὰς ὀρέων καὶ πετρήεντα κάρηνα.
+              </p>
+              <p className="poem-txt" style={{'display':`${distancePx > 1000 ? "block" : "none"}`}}>
+                <span>2/</span> φοιτᾷ δ᾽ ἔνθα καὶ ἔνθα διὰ ῥωπήια πυκνά,
+                ἄλλοτε μὲν ῥείθροισιν ἐφελκόμενος μαλακοῖσιν,
+                10ἄλλοτε δ᾽ αὖ πέτρῃσιν ἐν ἠλιβάτοισι διοιχνεῖ,
+                ἀκροτάτην κορυφὴν μηλοσκόπον εἰσαναβαίνων.
+              </p>
+              <p className="poem-txt" style={{'display':`${distancePx > 1000 ? "block" : "none"}`}}>
+                <span>3/</span> πολλάκι δ᾽ ἀργινόεντα διέδραμεν οὔρεα μακρά,
+                πολλάκι δ᾽ ἐν κνημοῖσι διήλασε θῆρας ἐναίρων,
+                ὀξέα δερκόμενος: τότε δ᾽ ἕσπερος ἔκλαγεν οἶον
+                15ἄγρης ἐξανιών, δονάκων ὕπο μοῦσαν ἀθύρων
+                νήδυμον: οὐκ ἂν τόν γε παραδράμοι ἐν μελέεσσιν
+                ὄρνις, ἥτ᾽ ἔαρος πολυανθέος ἐν πετάλοισι
+                θρῆνον ἐπιπροχέουσ᾽ ἀχέει μελίγηρυν ἀοιδήν.
+              </p>
+              <p className="poem-txt" style={{'display':`${distancePx > 1000 ? "block" : "none"}`}}>
+                <span>4/</span> σὺν δέ σφιν τότε Νύμφαι ὀρεστιάδες λιγύμολποι
+                20φοιτῶσαι πύκα ποσσὶν ἐπὶ κρήνῃ μελανύδρῳ
+                μέλπονται: κορυφὴν δὲ περιστένει οὔρεος Ἠχώ:
+                δαίμων δ᾽ ἔνθα καὶ ἔνθα χορῶν, τοτὲ δ᾽ ἐς μέσον ἕρπων,
+                πυκνὰ ποσὶν διέπει, λαῖφος δ᾽ ἐπὶ νῶτα δαφοινὸν
+                λυγκὸς ἔχει, λιγυρῇσιν ἀγαλλόμενος φρένα μολπαῖς
+                25ἐν μαλακῷ λειμῶνι, τόθι κρόκος ἠδ᾽ ὑάκινθος
+                εὐώδης θαλέθων καταμίσγεται ἄκριτα ποίῃ.
+              </p>
+              <p className="poem-txt" style={{'display':`${distancePx > 1000 ? "block" : "none"}`}}>
+                <span>5/</span> ὑμνεῦσιν δὲ θεοὺς μάκαρας καὶ μακρὸν Ὄλυμπον:
+                οἷόν θ᾽ Ἑρμείην ἐριούνιον ἔξοχον ἄλλων
+                ἔννεπον, ὡς ὅ γ᾽ ἅπασι θεοῖς θοὸς ἄγγελός ἐστι,
+                30καί ῥ᾽ ὅ γ᾽ ἐς Ἀρκαδίην πολυπίδακα, μητέρα μήλων,
+                ἐξίκετ᾽, ἔνθα τέ οἱ τέμενος Κυλληνίου ἐστίν.
+              </p>
+              <p className="poem-txt" style={{'display':`${distancePx > 1500 ? "block" : "none"}`}}>
+                <span>6/</span> ἔνθ᾽ ὅ γε καὶ θεὸς ὢν ψαφαρότριχα μῆλ᾽ ἐνόμευεν
+                ἀνδρὶ πάρα θνητῷ θάλε γὰρ πόθος ὑγρὸς ἐπελθὼν
+                νύμφῃ ἐυπλοκάμῳ Δρύοπος φιλότητι μιγῆναι:
+                35ἐκ δ᾽ ἐτέλεσσε γάμον θαλερόν. τέκε δ᾽ ἐν μεγάροισιν
+                Ἑρμείῃ φίλον υἱόν, ἄφαρ τερατωπὸν ἰδέσθαι,
+                αἰγιπόδην, δικέρωτα, φιλόκροτον, ἡδυγέλωτα:
+                φεῦγε δ᾽ ἀναΐξασα, λίπεν δ᾽ ἄρα παῖδα τιθήνη
+                δεῖσε γάρ, ὡς ἴδεν ὄψιν ἀμείλιχον, ἠυγένειον.
+              </p>
+              <p className="poem-txt" style={{'display':`${distancePx > 2000 ? "block" : "none"}`}}>
+                <span>7/</span> 40τὸν δ᾽ αἶψ᾽ Ἑρμείας ἐριούνιος εἰς χέρα θῆκε
+                δεξάμενος, χαῖρεν δὲ νόῳ περιώσια δαίμων.
+                ῥίμφα δ᾽ ἐς ἀθανάτων ἕδρας κίε παῖδα καλύψας
+                δέρμασιν ἐν πυκινοῖσιν ὀρεσκῴοιο λαγωοῦ
+                πὰρ δὲ Ζηνὶ κάθιζε καὶ ἄλλοις ἀθανάτοισι,
+                45δεῖξε δὲ κοῦρον ἑόν: πάντες δ᾽ ἄρα θυμὸν ἔτερφθεν
+                ἀθάνατοι, περίαλλα δ᾽ ὁ Βάκχειος Διόνυσος:
+                Πᾶνα δέ μιν καλέεσκον, ὅτι φρένα πᾶσιν ἔτερψε.
+              </p>
+              <p className="poem-txt" style={{'display':`${distancePx > 2000 ? "block" : "none"}`}}>
+                <span>8/</span> καὶ σὺ μὲν οὕτω χαῖρε, ἄναξ, ἵλαμαι δέ σ᾽ ἀοιδῇ
+                αὐτὰρ ἐγὼ καὶ σεῖο καὶ ἄλλης μνήσομ᾽ ἀοιδῆς.
+              </p>
+
+              <p className="result" style={{'display':`${showResult == true ? "flex" : "none"}`}}>
+                <span className="result-msg">You won :-)</span>
+                <span className="result-distance green">2330px</span>
+              </p>
+              
             </div>
         
-            <svg width="440" height={`${isOpen ? '60vh' : '120px'}`} id="scroll-middle-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="440" height={`${isGameOpen ? distancePx : isFaqOpen ? distancePx : isResultOpen ? distancePx : '120px'}`} id="scroll-middle-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
             </svg>
           </div>
 
@@ -249,10 +453,6 @@ function App() {
           </div>
         </div>
       </main>
-
-      {/* <footer>
-        <p>Made by Say_y</p>
-      </footer> */}
     </div>
   )
 }
