@@ -48,4 +48,11 @@
   - css cleaning
 
 25/03/23
-  -
+  - Wait animation
+  - General coding on the app
+  - Last fixes
+
+26/03/23
+  - Video recording
+  - App deployment
+  - ETH global file upload

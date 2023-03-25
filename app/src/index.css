@@ -39,6 +39,10 @@
   --pink: #E7C4B8;
 }
 
+p::selection, span::selection, h1::selection, h3::selection, br::selection, a::selection, div::selection, img::selection {
+  background: transparent;
+}
+
 html, body {
   position: relative;
   overflow-x: hidden;

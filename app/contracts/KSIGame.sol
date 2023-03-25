@@ -22,7 +22,7 @@ contract KSIGame {
   function enter(uint256 amount) public payable {
     uint result = randomNumber() % 2;
       
-    if(result == 0) {
+    if (result == 0) {
       payable(msg.sender).transfer(amount * 2);
       emit Status('You won :-)', msg.sender, true);
     } else {

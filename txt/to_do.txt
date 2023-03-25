@@ -20,7 +20,7 @@ WWW
   o Game integration
   o JS animation
   o Script json + Distance setting
-  - Wait animation 
+  o Wait animation 
   ~ Backend setup
   x Sound effect?
 

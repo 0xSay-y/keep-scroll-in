@@ -8,7 +8,7 @@ import random
 def job():
   try:
     nb_data = {}
-    nb = random.randint(1000, 3000)
+    nb = random.randint(1000, 2000)
     nb_data['nb'] = nb
 
     with open('randomNb.json', 'w', encoding='utf-8') as final_nb:
