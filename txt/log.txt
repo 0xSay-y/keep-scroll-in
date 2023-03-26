@@ -53,6 +53,6 @@
   - Last fixes
 
 26/03/23
-  - Video recording
   - App deployment
+  - Video recording + editing
   - ETH global file upload

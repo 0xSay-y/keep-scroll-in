@@ -25,18 +25,18 @@ WWW
   x Sound effect?
 
 SMART CONTRACTS
-  o Token (0x41485c5Fd37B1a4d892f2f4b668398242AE4f981)
+  x Token (0x41485c5Fd37B1a4d892f2f4b668398242AE4f981)
       https://blockscout.scroll.io/address/0x41485c5Fd37B1a4d892f2f4b668398242AE4f981
-  o Faucet (0xa1f7Ee880e7fD47d692606FAcBe757AB62c2deF3)
+  x Faucet (0xa1f7Ee880e7fD47d692606FAcBe757AB62c2deF3)
       https://blockscout.scroll.io/address/0xa1f7Ee880e7fD47d692606FAcBe757AB62c2deF3
   o Game (0x68cd17A476E31Aa16f5e2c0d1463D356f658fB16)
       https://blockscout.scroll.io/address/0x68cd17A476E31Aa16f5e2c0d1463D356f658fB16
 
 VIDEO
-  - Record app
-  - Record voice
-  - Editing
+  o Record app
+  o Record voice
+  o Editing
 
 ------------------------
 
-25/03/23
+26/03/23
