@@ -285,7 +285,7 @@ function App() {
 
           <div id="scroll-middle">
             <div id="scroll-txt" style={{'opacity':`${isGameOpen ? 1 : 0}`, 'transition': `${isGameOpen ? 'opacity 2.5s' : 'opacity 0.5s'}`, 'pointer-events':`${isGameOpen ? "all" : "none"}`}}>
-              <p className="title">Select a distance:</p>
+              <p className="title">Select a length:</p>
 
               <p className={select1 || 'distance'} id="distance1" onClick={selectDistance1}>
                 <span>1000<span className="px">px</span></span>
@@ -317,7 +317,7 @@ function App() {
               <p className="title">How can I play?</p>
               <p className="answer">
                 <span>1/</span>&nbsp; Connect your wallet on the top right corner.<br></br>
-                <span>2/</span>&nbsp; Click on Play &gt; choose a distance &gt; click on Bet.<br></br>
+                <span>2/</span>&nbsp; Click on Play &gt; choose a length &gt; click on Bet.<br></br>
                 <span>3/</span>&nbsp; Accept the transaction and wait for the result.
               </p>
 
