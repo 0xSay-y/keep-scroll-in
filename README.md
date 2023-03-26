@@ -5,8 +5,7 @@ Project submission for ETH Global 2023
 _STATUS: v1 Contract is deployed and live on Scroll Testnet._
 
 
-### Description
----
+## Description
 
 The idea behind this project was to build a playful usecase for the Scroll testnet.
 As for now, It's a double or nothing game where players can bet on the length of the Scroll.
@@ -20,8 +19,7 @@ For now, the "random" length is created on-chain by encoding the owner address w
 The scroll is made of code. It's an svg element, which make it more easy to manipulate than an image. 
 
 
-### Links
----
+## Links
 
 - [www](https://keep-scroll.in)
 - [figma](https://figma.com/file/Nm0K0iPyS8Z13pDavzj2JN)
