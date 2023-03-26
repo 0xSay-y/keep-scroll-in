@@ -3,8 +3,6 @@ import "./App.css"
 import { ethers } from "ethers"
 import faucetContract from "./js/faucet"
 import gameContract from "./js/game"
-import axios from 'axios'
-const ERC20ABI = require('./json/ERC20.json')
 
 function App() {
   // WALLET
@@ -26,11 +24,6 @@ function App() {
         setSigner(provider.getSigner())
         setContract(faucetContract(provider))
         setWalletAddress(accounts[0])
-
-        // const KSIaddress = "0x41485c5Fd37B1a4d892f2f4b668398242AE4f981"
-        // const KSI = new ethers.Contract(KSIaddress, ERC20ABI, provider)
-        // const KSIbalance = await KSI.balanceOf(accounts[0]) / 10**18
-        // console.log(KSIbalance.toString())
       } catch (err) {
         setWalletAddress("")
         console.error(err.message)
@@ -72,16 +65,6 @@ function App() {
       }
     }
   }
-
-  // FAUCET
-  // const getKSI = async () => {
-  //   try {
-  //     const contractWithSigner = contract.connect(signer)
-  //     const resp = await contractWithSigner.requestTokens()
-  //   } catch (err) {
-  //     console.error(err.message)
-  //   }
-  // }
 
   // SCROLL
   const [isGameOpen, setGameOpen] = useState(false)
@@ -209,44 +192,42 @@ function App() {
       }, 1000)
 
       const resultGame = game.once("Status", (msg, signer, winner) => {
-        axios.get('../random/nb.json').then(res => {
-          let nb = res.data['nb']
-          let distance = 0
+        let nb = Math.floor(Math.random() * 2000) + 1000;
+        let distance = 0
 
-          if (winner == true) {
-            if (select1 == 'distance selected' && nb < 1500) {
-              distance += nb
-            } else if (select1 == 'distance selected' && nb > 1500) {
-              distance += nb - 500
-            } else if (select2 == 'distance selected' && nb < 1500) {
-              distance += nb + 500
-            } else if (select2 == 'distance selected' && nb > 1500) {
-              distance += nb
-            }
-            setColor('green result-distance')
-          } else {
-            if (select1 == 'distance selected' && nb < 1500) {
-              distance += nb + 500
-            } else if (select1 == 'distance selected' && nb > 1500) {
-              distance += nb
-            } else if (select2 == 'distance selected' && nb < 1500) {
-              distance += nb
-            } else if (select2 == 'distance selected' && nb > 1500) {
-              distance += nb - 500
-            }
-            setColor('red result-distance')
+        if (winner == true) {
+          if (select1 == 'distance selected' && nb < 1500) {
+            distance += nb
+          } else if (select1 == 'distance selected' && nb > 1500) {
+            distance += nb - 500
+          } else if (select2 == 'distance selected' && nb < 1500) {
+            distance += nb + 500
+          } else if (select2 == 'distance selected' && nb > 1500) {
+            distance += nb
           }
+          setColor('green result-distance')
+        } else {
+          if (select1 == 'distance selected' && nb < 1500) {
+            distance += nb + 500
+          } else if (select1 == 'distance selected' && nb > 1500) {
+            distance += nb
+          } else if (select2 == 'distance selected' && nb < 1500) {
+            distance += nb
+          } else if (select2 == 'distance selected' && nb > 1500) {
+            distance += nb - 500
+          }
+          setColor('red result-distance')
+        }
 
-          const finalPx = distance.toString()
-          setDistancePx(finalPx + "px")
-          updateScrollGame(finalPx)
-          setMsg(msg)
-          setFinalDistance(finalPx + "px")
+        const finalPx = distance.toString()
+        setDistancePx(finalPx + "px")
+        updateScrollGame(finalPx)
+        setMsg(msg)
+        setFinalDistance(finalPx + "px")
 
-          console.log("Final nb: " + distance + "px")
-          console.log("Result: " + msg)
-          console.log("--")
-        })
+        console.log("Final nb: " + distance + "px")
+        console.log("Result: " + msg)
+        console.log("--")
       })
     } catch (err) {
       console.log(err)

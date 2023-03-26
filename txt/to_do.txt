@@ -21,7 +21,7 @@ WWW
   o JS animation
   o Script json + Distance setting
   o Wait animation 
-  ~ Backend setup
+  o Backend setup
   x Sound effect?
 
 SMART CONTRACTS
