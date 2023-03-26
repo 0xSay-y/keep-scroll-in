@@ -192,7 +192,7 @@ function App() {
       }, 1000)
 
       const resultGame = game.once("Status", (msg, signer, winner) => {
-        let nb = Math.floor(Math.random() * 2000) + 1000;
+        let nb = Math.floor(Math.random() * 1000) + 1000;
         let distance = 0
 
         if (winner == true) {
